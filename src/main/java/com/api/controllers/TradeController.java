@@ -1,6 +1,8 @@
 package com.api.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.sound.midi.SysexMessage;
@@ -23,6 +25,7 @@ import com.api.entities.Portfolio;
 import com.api.entities.Trade;
 import com.api.services.PortfolioService;
 import com.api.services.TradeService;
+import com.sun.net.httpserver.Authenticator.Success;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -64,13 +67,16 @@ public class TradeController {
 	)
 	@ApiOperation(value = "returns list of trades")
 	@GetMapping("/trade/{id}")
-	public ResponseEntity<Trade> getTradeById(@PathVariable("id") int id){
+	public ResponseEntity<ResponseTrade> getTradeById(@PathVariable("id") int id){
 		System.out.println("inside trade id");
 		Trade trade=null;
 		try {
 			trade = this.tradeService.getTradeById(id);
 			if(trade!=null) {
-				return ResponseEntity.status(HttpStatus.OK).body(trade);
+				return ResponseEntity.status(HttpStatus.OK).body(new ResponseTrade("success","empty ",trade));
+			}
+			else {
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseTrade("success","empty ",null));
 			}
 		}
 		catch (Exception e) {
@@ -126,10 +132,13 @@ public class TradeController {
 		)
 	@ApiOperation(value = "returns list of all trades")
 	@GetMapping(value = {"portfolio","trade"})
-	public ResponseEntity<List<Trade>> getAllTrades(){
+	public ResponseEntity<Object> getAllTrades(){
 		List<Trade> orders = tradeService.getAllTrades();
+		Map<String, String> map = new HashMap<String, String>();
 		if(orders.size()<=0) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+			map.put("status", "Success");
+			map.put("message", "No value present");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(map);
 		}
 		return ResponseEntity.ok(orders);
 	}
