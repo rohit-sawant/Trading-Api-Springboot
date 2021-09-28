@@ -145,7 +145,9 @@ public class TradeController {
 	@DeleteMapping("trade/{id}")
 	public ResponseEntity<ResponseTrade> deleteTrade(@PathVariable("id") int id){
 		Trade trade = this.tradeService.getTradeById(id);
-
+		if(trade==null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseTrade("fail","No such id found!",null));
+		}
 		if(trade.getType().equalsIgnoreCase("buy")) {
 			ResponseEntity<ResponseTrade> responseTrade= deleteBuyTrade2(id);
 			return responseTrade;
@@ -209,10 +211,7 @@ public class TradeController {
 		try {
 			Trade trade = this.tradeService.getTradeById(id);
 			Portfolio portfolio=this.portfolioService.getPortfolioBySymbol(trade.getSymbol());
-			if((portfolio.getQty() - trade.getQty()) <= 0) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseTrade("fail","enter proper qty",null));
-			}
-			else{
+			
 				double portfolio__price = portfolio.getAvg_price();
 				int portfolio_qty = portfolio.getQty();
 				double trade_price = trade.getPrice();
@@ -221,10 +220,16 @@ public class TradeController {
 				int qty =  portfolio_qty- trade_qty;
 				portfolio.setAvg_price(answer);
 				portfolio.setQty(qty);
-				portfolio  =  this.portfolioService.save(portfolio);
+				if(qty==0) {
+					this.portfolioService.deletePortfolioById(portfolio.getId());
+				}
+				else {
 
+					portfolio  =  this.portfolioService.save(portfolio);
+				}
+				
 				this.tradeService.deleteTradeById(id);
-			}
+			
 			return ResponseEntity.status(HttpStatus.OK).body(new ResponseTrade("success","deleted",null));
 
 		} catch (Exception e) {
