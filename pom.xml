@@ -46,11 +46,10 @@
 			<version>2.1.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			<version>2.5.4</version>
-		</dependency>
+		  <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -65,13 +64,17 @@
 			<version>8.0.26</version>
 		</dependency>-->
 		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-<dependency>
-    <groupId>org.postgresql</groupId>
-    <artifactId>postgresql</artifactId>
-    <version>42.2.24</version>
-</dependency>
+ <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>9.4-1201-jdbc41</version>
+    </dependency>
 		
-
+<dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <scope>runtime</scope>
+    </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -84,12 +87,10 @@
   <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-source-plugin</artifactId>
-    <executions>
-      <execution>
-        <id>attach-sources</id>
-        <phase>none</phase>
-      </execution>
-    </executions>
+    <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
   </plugin>
   <plugin>
     <groupId>org.apache.maven.plugins</groupId>
