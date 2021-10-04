@@ -82,7 +82,7 @@ public class TradeController {
 		catch (Exception e) {
 			System.out.println("error in gettradebyid "+e.getMessage());
 		}
-		return ResponseEntity.ok(null);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseTrade("success","no such id exist! ",null));
 	}
 	@ApiResponses(
 			value= {
