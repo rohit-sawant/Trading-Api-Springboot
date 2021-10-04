@@ -76,13 +76,13 @@ public class TradeController {
 				return ResponseEntity.status(HttpStatus.OK).body(new ResponseTrade("success","empty ",trade));
 			}
 			else {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseTrade("success","no such id exist! ",null));
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseTrade("erro","no such id exist! ",null));
 			}
 		}
 		catch (Exception e) {
 			System.out.println("error in gettradebyid "+e.getMessage());
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseTrade("success","no such id exist! ",null));
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseTrade("error","no such id exist! ",null));
 	}
 	@ApiResponses(
 			value= {
