@@ -65,7 +65,7 @@ public class TradeController {
 				@ApiResponse(code =204,message = "Succesful but no content recieved from api")
 		}
 	)
-	@ApiOperation(value = "returns list of trades")
+	@ApiOperation(value = "returns specific trade by id")
 	@GetMapping("/trade/{id}")
 	public ResponseEntity<ResponseTrade> getTradeById(@PathVariable("id") int id){
 		System.out.println("inside trade id");
@@ -76,7 +76,7 @@ public class TradeController {
 				return ResponseEntity.status(HttpStatus.OK).body(new ResponseTrade("success","empty ",trade));
 			}
 			else {
-				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseTrade("success","empty ",null));
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseTrade("success","no such id exist! ",null));
 			}
 		}
 		catch (Exception e) {
