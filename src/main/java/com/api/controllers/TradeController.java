@@ -68,7 +68,7 @@ public class TradeController {
 	@ApiOperation(value = "returns specific trade by id")
 	@GetMapping("/trade/{id}")
 	public ResponseEntity<ResponseTrade> getTradeById(@PathVariable("id") int id){
-		System.out.println("inside trade id");
+		
 		Trade trade=null;
 		try {
 			trade = this.tradeService.getTradeById(id);
@@ -76,13 +76,13 @@ public class TradeController {
 				return ResponseEntity.status(HttpStatus.OK).body(new ResponseTrade("success","empty ",trade));
 			}
 			else {
-				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseTrade("success","no such id exist! ",null));
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseTrade("success","no such id exist! ",null));
 			}
 		}
 		catch (Exception e) {
 			System.out.println("error in gettradebyid "+e.getMessage());
 		}
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseTrade("success","no such id exist! ",null));
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseTrade("success","no such id exist! ",null));
 	}
 	@ApiResponses(
 			value= {
