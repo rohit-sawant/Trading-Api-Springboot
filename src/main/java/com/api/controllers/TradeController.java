@@ -131,7 +131,7 @@ public class TradeController {
 			}
 		)
 	@ApiOperation(value = "returns list of all trades")
-	@GetMapping(value = {"portfolio","trade"})
+	@GetMapping(value = {"portfolio","trade","/"})
 	public ResponseEntity<Object> getAllTrades(){
 		List<Trade> orders = tradeService.getAllTrades();
 		Map<String, String> map = new HashMap<String, String>();
